@@ -24,4 +24,4 @@ num_heads = 6
 num_layers = 6
 
 #devices = torch.get_all_devices()
-print([torch.cuda.device(i) for i in range(torch.cuda.device_count())])
+#print([torch.cuda.device(i) for i in range(torch.cuda.device_count())])

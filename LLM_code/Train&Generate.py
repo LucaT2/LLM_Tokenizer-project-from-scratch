@@ -7,9 +7,11 @@ from Tokenizer import Tokenizer
 def tokenize_data(tokenizer:Tokenizer):
     MODEL_FILE = tokenizer.model_file
     VOCAB_FILE = tokenizer.vocab_file
+
     with open(DATASET_FILE, "r", encoding="utf-8") as f:
         data = f.read()
         print(f"Length of dataset: {len(data)}")
+    
     if os.path.exists(MODEL_FILE) and os.path.exists(VOCAB_FILE):
         print(f"Model file '{MODEL_FILE}' and vocab file '{VOCAB_FILE}' already exist. Skipping training.")
     else:
@@ -34,7 +36,7 @@ def tokenize_data(tokenizer:Tokenizer):
     #
     # decoded_dummy = tokenizer.decode(encoded_dummy)
     # print(f"Decoded sentence: {decoded_dummy}")
-ENCODED_FILE = r"files\encoded_text"
+ENCODED_FILE = r"LLM_code/files/encoded_text"
 def prepare_data(tokenizer:Tokenizer, data):
     if os.path.exists(ENCODED_FILE):
         print(f"Encoded file '{ENCODED_FILE}' already exist. Skipping encoding.")
@@ -101,7 +103,7 @@ def load_model_from_files():
     # There is also another 'pth' file with the weights from another model that
     # is similar to this one, but I believe this one is a bit better
     # This is also the model that corresponds to the code written in the .py files
-    state_dict = torch.load('files/model_weights2.pth', weights_only=True)
+    state_dict = torch.load('LLM_code/files/model_weights2.pth', weights_only = True)
     model.load_state_dict(state_dict)
     model.to(device)
     model.eval()

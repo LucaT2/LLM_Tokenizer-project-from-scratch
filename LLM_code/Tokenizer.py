@@ -28,8 +28,8 @@ class Tokenizer:
         self.num_merges = NUM_MERGES
         self.merges = {}
         self.vocab = self.build_vocab()
-        self.model_file = r"files\tokenizer.model"
-        self.vocab_file = r"files\tokenizer.vocab"
+        self.model_file = r"LLM_code/files/tokenizer.model"
+        self.vocab_file = r"LLM_code/files/tokenizer.vocab"
 
 
     @staticmethod
