@@ -6,11 +6,18 @@ The model is available both in  my [Kaggle Notebook](https://www.kaggle.com/code
 This is a decoder only Transformer, thus it generates random text based on the books that it has been trained on. 
 
 ## Data Collection
-My training and validation data consists of about 25 early sci-fi books, in total the dataset has around 1.5 Milion words and after tokenization 2.2 Milion tokens. The books are downloaded from project Gutenberg. I cleaned the data by only keeping the content between a start and an end marker so as to not include header and footers that are not relevant to the content of the books and my purpose to generate text that looks somewhat like early scifi.
+My training and validation data consists of about 25 early sci-fi books, in total the dataset has around 1.5 Milion words and after tokenization 2.2 Milion tokens. The books are downloaded from project Gutenberg. I cleaned the data by only keeping the content between a start and an end marker so as to not include header and footers that are not relevant to the content of the books and my purpose to generate text that looks somewhat like early Scifi.
 
 ## Tokenizer
-My Tokenizer is trained using [BPE](https://en.wikipedia.org/wiki/Byte-pair_encoding) (byte pair encoding) and produces 8256 tokens. I first split the text using the GPT4 split pattern using this regex `(?i:[sdmt]|ll|ve|re)|[^\r\n\p{L}\p{N}]?+\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]++[\r\n]*|\s*[\r\n]|\s+(?!\S)|\s+`, after which I encode it using UTF-8. Then I train it using BPE, mergin the highest frequency bytes. Training this took around 8 hours so it's quite a time consuming process. After obtaining the 8000 new tokens I save them in two files: tokenizer.model and tokenizer.vocab, the model file is for training the model and the vocab file is just for visualizing and understanding the merges that the algorithm made.
+My Tokenizer is trained using [BPE](https://en.wikipedia.org/wiki/Byte-pair_encoding) (byte pair encoding) and produces 8256 tokens. I first split the text using the GPT4 split pattern using this regex `(?i:[sdmt]|ll|ve|re)|[^\r\n\p{L}\p{N}]?+\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]++[\r\n]*|\s*[\r\n]|\s+(?!\S)|\s+`, after which I encode it using UTF-8.
+
+Afterwards I train it using BPE, merging the highest frequency bytes. Training this took around 8 hours so it's quite a time consuming process. After obtaining the 8000 new tokens I save them in two files: tokenizer.model and tokenizer.vocab, the .model file is for training the model and the .vocab file is just for visualizing and understanding the merges that the algorithm made.
 
 ## Transformer Model
-My Transformer model is a decoder only model that generates text. It looks very similar to the figure below, with the mention that it does not take any input, but it generates solely on what it has generated before.
-[Transformer Arhitecture]
+My Transformer model is a decoder only model that generates text. It looks very similar to the figure below, with the mention that it does not take any input, but it generates new tokens based solely on what it has previously generated. Also I have Dropout layers after every other layer.
+
+
+![Transformer Arhitecture](/Readme-assets/Decoder-only-model.jpg)
+
+
+The dimension of the embedding in my model is 256, the multi-head layer consists of 6 heads, and I have 6 Transformer blocks. The context of the model is 256, so each token can learn from the 256 tokens that came before itself. I set my dropout to 0.2 and for normalization I use layer normalization. The activation function is Relu and this is applied only for the Feed Forward layer. The Feed Forward consists of two linear layers, a Relu layer between them and a Dropout layer at the end.
