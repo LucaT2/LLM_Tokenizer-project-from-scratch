@@ -1,4 +1,4 @@
-# LLM_Tokenizer-project-from-scratch
+# MiniGPT_with_Tokenizer_from_scratch
 ## OVERVIEW
 
 In this project I built a Tokenizer and an LLM from scratch for the purpose of understanding better how the Transformer arhitecture works. 
